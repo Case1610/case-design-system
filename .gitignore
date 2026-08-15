@@ -1,0 +1,18 @@
+# Claude Code local settings (machine-specific permissions)
+.claude/settings.local.json
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+storybook-static/
+
+# Env
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db

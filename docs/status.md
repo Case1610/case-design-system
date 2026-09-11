@@ -42,11 +42,15 @@ Begin with the End in Mind / Tailor to the Case）と、原則衝突時の裁定
 
 決めるべきことの順序:
 
-1. **色空間の選択** — OKLCH か HCT か。役割ごとのトーン（明度）値を固定する土台
-2. **ブランド色スロットの数** — 1〜3。Material 3 は primary/secondary/tertiary の3
-3. **セマンティック色の生成元** — ブランド色と分離する。error/success/warning/info
-4. **トークンの階層と命名** — Primitive → Semantic → Component
-5. **流体スケール** — 型と余白。ビューポート2極を決めて `clamp()` で補間する方式を検討中
+1. ~~**色空間の選択**~~ → **OKLCH に決定**（2026-09-11、docs/decisions.md）。
+   明度は役割に予約し、彩度・色相は解放する
+2. ~~**明度の段階**~~ → **6段階に決定**（2026-09-11、docs/decisions.md）。
+   `bg` / `surface` / `border` / `text-muted` / `text` / `text-strong`。
+   値ではなく役割名で定義し、ライト・ダークで名前は共通、値だけ差し替える
+3. **ブランド色スロットの数** — 1〜3。Material 3 は primary/secondary/tertiary の3 ← **いまここ**
+4. **セマンティック色の生成元** — ブランド色と分離する。error/success/warning/info
+5. **トークンの階層と命名** — Primitive → Semantic → Component
+6. **流体スケール** — 型と余白。ビューポート2極を決めて `clamp()` で補間する方式を検討中
 
 ## 保留中の論点
 
@@ -65,6 +69,20 @@ CLAUDE.md の技術選定（React + React Aria / vanilla-extract）は、
 React Aria を外す判断はしていない。原則4（入力手段を選ばない）は領域を問わず
 最優先であり、a11y の土台を自前実装に戻す理由はない。
 **ただし「主役コンポーネントが変わる」という前提の変化は記録しておく。**
+
+### Web 上での公開方法
+
+本人の意向（2026-09-11）: **デザインシステム自体を Web 上で見られるようにしたい。**
+繋ぎ方と表示方法は後ほど設計する。
+
+フェーズ一覧には「ドキュメントサイト（Storybook）」と書いてあるが、
+Storybook と決め打ちしない。下記の case-website への適用方針と重なる論点であり、
+「トークンとコンポーネントをどう見せるか」「どこにホストするか」を含めて一緒に設計する。
+
+検討の材料になる制約:
+- case-website は Cloudflare Workers 上で動いており、同じ仕組みに乗せられる
+- 見せる対象は「トークンの一覧」なのか「コンポーネントの動作」なのか
+  「設計判断の経緯（principles / decisions）」なのかで、必要な形式が変わる
 
 ### case-website への適用方針
 

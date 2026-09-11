@@ -47,8 +47,11 @@ Begin with the End in Mind / Tailor to the Case）と、原則衝突時の裁定
 2. ~~**明度の段階**~~ → **6段階に決定**（2026-09-11、docs/decisions.md）。
    `bg` / `surface` / `border` / `text-muted` / `text` / `text-strong`。
    値ではなく役割名で定義し、ライト・ダークで名前は共通、値だけ差し替える
-3. **ブランド色スロットの数** — 1〜3。Material 3 は primary/secondary/tertiary の3 ← **いまここ**
-4. **セマンティック色の生成元** — ブランド色と分離する。error/success/warning/info
+3. ~~**ブランド色スロットの数**~~ → **1色（色相1つ）に決定**（2026-09-11、docs/decisions.md）。
+   色相を変数として外出しし、作るものごと／閲覧者ごとに差し替え可能にする。
+   これは原則1の軸がひとつ増えたことを意味する（principles.md の原則1「現れ方」に追記済み）
+4. **セマンティック色の生成元** — ブランド色と分離する。error/success/warning/info。
+   色相が衝突しうるため、状態の伝達は色＋アイコン＋テキストで行う ← **いまここ**
 5. **トークンの階層と命名** — Primitive → Semantic → Component
 6. **流体スケール** — 型と余白。ビューポート2極を決めて `clamp()` で補間する方式を検討中
 

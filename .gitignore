@@ -8,6 +8,7 @@ node_modules/
 dist/
 build/
 storybook-static/
+*.tsbuildinfo
 
 # Env
 .env

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { vars, HUE_VAR } from '../tokens/contract.css';
-import { lightTheme, darkTheme } from '../tokens/themes.css';
+import { themeClass, useColorScheme } from '../theme';
+import type { ColorSchemePreference } from '../theme';
 import * as s from './showcase.css';
 
 const swatches = [
@@ -18,13 +19,19 @@ const brandSwatches = [
   { name: 'brandSubtle', value: vars.color.brandSubtle, on: vars.color.brand },
 ];
 
+const schemeOptions: { value: ColorSchemePreference; label: string }[] = [
+  { value: 'system', label: 'システム' },
+  { value: 'light', label: 'ライト' },
+  { value: 'dark', label: 'ダーク' },
+];
+
 function Showcase() {
-  const [dark, setDark] = useState(false);
+  const { preference, setPreference, resolved, system } = useColorScheme();
   const [hue, setHue] = useState(265);
 
   return (
     <div
-      className={`${dark ? darkTheme : lightTheme} ${s.page}`}
+      className={`${themeClass(resolved)} ${s.page}`}
       style={{ [HUE_VAR]: String(hue) } as React.CSSProperties}
     >
       <div className={s.container}>
@@ -34,10 +41,24 @@ function Showcase() {
         </p>
 
         <div className={s.controls}>
-          <label className={s.controlLabel}>
-            <input type="checkbox" checked={dark} onChange={(e) => setDark(e.target.checked)} />
-            ダークモード
-          </label>
+          <div className={s.controlLabel}>
+            配色
+            <div className={s.segmented} role="radiogroup" aria-label="配色">
+              {schemeOptions.map((option) => (
+                <label key={option.value} className={s.segment}>
+                  <input
+                    className={s.srOnly}
+                    type="radio"
+                    name="color-scheme"
+                    value={option.value}
+                    checked={preference === option.value}
+                    onChange={() => setPreference(option.value)}
+                  />
+                  {option.label}
+                </label>
+              ))}
+            </div>
+          </div>
           <label className={s.controlLabel}>
             色相
             <input
@@ -51,6 +72,10 @@ function Showcase() {
             <span style={{ width: 30, textAlign: 'right' }}>{hue}</span>
           </label>
         </div>
+        <p className={s.systemHint}>
+          既定は「システム」。OS の設定（いまは{system === 'dark' ? 'ダーク' : 'ライト'}）に追従し、
+          設定を変えればこのページも切り替わる。手動で選ぶとその選択が保存され、以降は追従しない。
+        </p>
 
         <h2 className={s.h2}>中立色 — 6段階</h2>
         <div className={s.swatchRow}>

@@ -156,3 +156,60 @@ export const tag = style({
   fontSize: 11,
   fontWeight: 600,
 });
+
+/**
+ * 配色の切替（システム / ライト / ダーク）。
+ *
+ * 見た目はセグメント型だが、中身は name を共有した素の radio。
+ * 矢印キーでの移動・ラベルのクリック・スクリーンリーダーでの読み上げは
+ * ブラウザ側の実装がそのまま働く（原則4）。自前で tabIndex や
+ * キーイベントを書くと、その瞬間からブラウザの改善が届かなくなる。
+ */
+export const segmented = style({
+  display: 'inline-flex',
+  background: vars.color.bg,
+  border: `1px solid ${vars.color.border}`,
+  borderRadius: 8,
+  padding: 2,
+  gap: 2,
+});
+
+export const srOnly = style({
+  position: 'absolute',
+  width: 1,
+  height: 1,
+  padding: 0,
+  margin: -1,
+  overflow: 'hidden',
+  clipPath: 'inset(50%)',
+  whiteSpace: 'nowrap',
+  border: 0,
+});
+
+export const segment = style({
+  borderRadius: 6,
+  padding: '6px 13px',
+  fontSize: 12,
+  fontWeight: 600,
+  color: vars.color.textMuted,
+  cursor: 'pointer',
+  userSelect: 'none',
+  selectors: {
+    '&:has(input:checked)': {
+      background: vars.color.surface,
+      color: vars.color.textStrong,
+    },
+    // フォーカスリングは input ではなくラベルに出す。
+    // 実際に見えている当たり判定はラベルの方なので、そこを囲わないと位置がずれる。
+    '&:has(input:focus-visible)': {
+      outline: `2px solid ${vars.color.brand}`,
+      outlineOffset: 2,
+    },
+  },
+});
+
+export const systemHint = style({
+  color: vars.color.textMuted,
+  fontSize: 11,
+  margin: '8px 0 0',
+});

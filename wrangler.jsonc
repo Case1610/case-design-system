@@ -1,0 +1,6 @@
+{
+  // 公開URLのサブドメインになる: design-system.1610-case.workers.dev
+  "name": "design-system",
+  "compatibility_date": "2026-09-11",
+  "assets": { "directory": "./dist" }
+}

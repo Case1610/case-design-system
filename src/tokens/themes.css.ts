@@ -43,8 +43,12 @@ export const darkTheme = createTheme(vars, {
 
     // ライトでは brand より暗い方がホバー、ダークでは明るい方がホバー。
     // 値の方向は逆だが「ホバーで目立つ」という関係は保たれている。
+    //
+    // 差はライトの 10 ポイントに対し、ダークは 15 ポイント取ってある。
+    // 明るい領域同士の明度差は中間領域より知覚しにくく、同じ 10 ポイントでは
+    // ホバーだと気づけなかったため（実機で 75/78/80/83% を比較して決定）。
     brand: brandColor('65%', '0.15'),
-    brandHover: brandColor('75%', '0.15'),
+    brandHover: brandColor('80%', '0.15'),
     onBrand: neutral('15%'),
     brandSubtle: brandColor('28%', '0.05'),
   },

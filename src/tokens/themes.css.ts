@@ -100,7 +100,10 @@ export const lightTheme = createTheme(vars, {
     bg: neutral('97%'),
     surface: neutral('100%'),
     border: neutral('88%'),
-    textMuted: neutral('55%'),
+    // 55% ではなく 54%。55% だと bg（97%）に乗せたとき 4.41:1 で AA を割る。
+    // 明度を予約すればコントラストは計算で保証される、という前提が
+    // 実測で破れていた1点（2026-09-12、docs/decisions.md）
+    textMuted: neutral('54%'),
     text: neutral('35%'),
     textStrong: neutral('20%'),
 

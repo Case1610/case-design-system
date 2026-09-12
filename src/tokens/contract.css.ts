@@ -33,6 +33,31 @@ export const vars = createThemeContract({
     onBrand: null,
     /** アクセントの淡い面。タグ・ラベルの背景 */
     brandSubtle: null,
+
+    /**
+     * 状態色。ブランド色とは生成元を分けてある（原則2）。
+     *
+     * `〜` は文字・アイコン・枠線・塗りに使う濃い方。
+     * `〜Subtle` はその状態の面（バナー・トーストの背景）。
+     * ブランド色が brand / brandSubtle の2段で足りているのと同じ構造。
+     */
+    danger: null,
+    dangerSubtle: null,
+    warning: null,
+    warningSubtle: null,
+    success: null,
+    successSubtle: null,
+    info: null,
+    infoSubtle: null,
+
+    /**
+     * 状態色を塗りに使ったとき、その上に乗る文字。
+     *
+     * 値はいま onBrand と同じだが、名前は分ける。
+     * 同じ値であることは偶然であって、片方の明度を動かしたときに
+     * もう片方まで一緒に動いてよい理由にはならない。
+     */
+    onStatus: null,
   },
 });
 
@@ -44,3 +69,38 @@ export const vars = createThemeContract({
  * （原則1「快適さを我々が決め打ちしない」の、色における現れ方）。
  */
 export const HUE_VAR = '--ds-hue';
+
+/**
+ * 状態の種類。この4つより増やさない。
+ *
+ * 増やすほど「意味のある色」と「装飾」の区別が壊れやすくなる（原則2）。
+ */
+export const STATUS_NAMES = ['danger', 'warning', 'success', 'info'] as const;
+export type StatusName = (typeof STATUS_NAMES)[number];
+
+/**
+ * 状態色の色相を外から差し替えるための CSS 変数名。
+ *
+ * ブランド色の HUE_VAR とは別に持つ。これが「生成元を分ける」（原則2）の実体で、
+ * 変数が分かれているからこそ、状態色をブランドに追従させるか・固定するか・
+ * ぶつかったときだけずらすかを、後から切り替えられる。
+ */
+export const STATUS_HUE_VARS: Record<StatusName, string> = {
+  danger: '--ds-hue-danger',
+  warning: '--ds-hue-warning',
+  success: '--ds-hue-success',
+  info: '--ds-hue-info',
+};
+
+/**
+ * 状態色の既定の色相。変数が未設定ならこの値が使われる。
+ *
+ * 「赤は危険」「緑は成功」は学習された慣習であって、計算で導ける値ではない。
+ * だからここは根拠を数式ではなく慣習に置いている。
+ */
+export const STATUS_BASE_HUE: Record<StatusName, number> = {
+  danger: 27,
+  warning: 70,
+  success: 150,
+  info: 245,
+};

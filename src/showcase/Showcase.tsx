@@ -8,13 +8,11 @@ import {
 } from '../tokens/contract.css';
 import { themeClass, useColorScheme } from '../theme';
 import type { ColorSchemePreference } from '../theme';
-import { StatusIcon } from './StatusIcon';
+import { StatusIcon } from '../components/StatusIcon';
+import { StatusMessage } from '../components/StatusMessage';
 import {
   MIN_HUE_DISTANCE,
   hueDistance,
-  resolveStatusHues,
-  statusHueStyle,
-  type StatusHueStrategy,
 } from './statusHue';
 import * as s from './showcase.css';
 
@@ -60,24 +58,6 @@ const STATUS_BG: Record<StatusName, string> = {
   info: vars.color.infoSubtle,
 };
 
-const strategyOptions: { value: StatusHueStrategy; label: string; desc: string }[] = [
-  {
-    value: 'shared',
-    label: '対照 — ブランドと同じ色相から作る',
-    desc: '採用候補ではない。生成元を分けるという既存の決定（原則2）が何を防いでいるかを見るための比較対象。状態色4つが常に1色になる。',
-  },
-  {
-    value: 'fixed',
-    label: 'A. 色相を固定する',
-    desc: '状態色は慣習どおりの色相に固定し、--ds-hue の影響を受けない。状態色どうしは常に区別できるが、ブランド側が寄ってきたときは防げない。',
-  },
-  {
-    value: 'avoid',
-    label: `B. ぶつかったら状態色をずらす（${MIN_HUE_DISTANCE}度を確保）`,
-    desc: '4つの相対関係を保ったまま、最小の回転量でブランド色相から離す。ブランドとは必ず見分けられるが、エラーが赤でなくなる。',
-  },
-];
-
 /**
  * 衝突をひと押しで再現するためのプリセット。
  *
@@ -118,10 +98,12 @@ function Banner({
 function Showcase() {
   const { preference, setPreference, resolved, system } = useColorScheme();
   const [hue, setHue] = useState(265);
-  const [strategy, setStrategy] = useState<StatusHueStrategy>('fixed');
   const [cues, setCues] = useState(false);
 
-  const statusHues = resolveStatusHues(strategy, hue);
+  // C を採用したため、状態色の色相は慣習どおりに固定する。
+  // 色相をずらすと「アイコンはエラーと言っているのに色は緑」が起きる。
+  // 色が意味を運ばないという前提の下では、ずらす側が邪魔になる（docs/decisions.md）。
+  const statusHues = STATUS_BASE_HUE;
 
   return (
     <div
@@ -129,7 +111,6 @@ function Showcase() {
       style={
         {
           [HUE_VAR]: String(hue),
-          ...statusHueStyle(statusHues),
         } as React.CSSProperties
       }
     >
@@ -245,29 +226,15 @@ function Showcase() {
           これはバグではなく、原則1（色相は閲覧者が決める）を実装した結果として必然的に出てくる問題で、
           原則2（意味を伝える資源を、意味以外で消費しない）と正面からぶつかっている。
           <br />
-          下の切替で、解き方を見比べられる。<strong>まだどれも採用していない。</strong>
+          <strong>解き方は C（色だけに頼らない）を採用した</strong>（2026-09-12、docs/decisions.md）。
+          意味はアイコンと状態名が運び、色は補助に回る。
+          色相を固定したのはその帰結で、ずらすと「アイコンはエラーと言っているのに色は緑」が起きるため。
         </p>
 
         <div className={s.strategyBox}>
-          <div className={s.strategyOptions} role="radiogroup" aria-label="状態色の色相の決め方">
-            {strategyOptions.map((option) => (
-              <label key={option.value} className={s.strategyOption}>
-                <input
-                  type="radio"
-                  name="status-hue-strategy"
-                  value={option.value}
-                  checked={strategy === option.value}
-                  onChange={() => setStrategy(option.value)}
-                />
-                <span className={s.strategyName}>{option.label}</span>
-                <p className={s.strategyDesc}>{option.desc}</p>
-              </label>
-            ))}
-          </div>
-
           <label className={s.checkLine}>
-            <input type="checkbox" checked={cues} onChange={(e) => setCues(e.target.checked)} />
-            C. 色だけに頼らない — アイコンと状態名を付ける（A・B と併用できる）
+            <input type="checkbox" checked={!cues} onChange={(e) => setCues(!e.target.checked)} />
+            色だけに戻して見る（採用前の状態。アイコンと状態名を外す）
           </label>
 
           <table className={s.hueTable}>
@@ -351,6 +318,29 @@ function Showcase() {
           <Banner name="info" cues={cues}>
             次回のメンテナンスは 9月20日 2:00 からです
           </Banner>
+        </div>
+
+        <h3 className={s.cardTitle} style={{ fontSize: 14, margin: '22px 0 8px' }}>
+          採用した形 — StatusMessage
+        </h3>
+        <p className={s.note}>
+          「色だけに頼らない」は方針のままでは守られない。守らなくても動くからである。
+          だから<strong>部品にした。</strong>色・アイコン・状態名を一括で出し、3つを別々に使えなくしてある。
+          上のチェックを入れても、ここだけは形が変わらない。
+        </p>
+        <div className={s.card} style={{ display: 'grid', gap: 8 }}>
+          <StatusMessage status="danger">
+            保存できませんでした。通信を確認してもう一度お試しください。
+          </StatusMessage>
+          <StatusMessage status="warning">
+            下書きが 30 分前から保存されていません。
+          </StatusMessage>
+          <StatusMessage status="success">
+            公開しました。反映まで 1 分ほどかかることがあります。
+          </StatusMessage>
+          <StatusMessage status="info">
+            この設定は、この端末のブラウザにだけ保存されます。
+          </StatusMessage>
         </div>
 
         <h3 className={s.cardTitle} style={{ fontSize: 14, margin: '22px 0 8px' }}>

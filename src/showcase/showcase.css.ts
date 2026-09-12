@@ -6,49 +6,49 @@ export const page = style({
   color: vars.color.text,
   minHeight: '100vh',
   fontFamily: 'system-ui, -apple-system, "Hiragino Sans", sans-serif',
-  padding: '32px 24px 64px',
+  padding: `${vars.space.xl} ${vars.space.lg} ${vars.space['2xl']}`,
 });
 
 export const container = style({
   maxWidth: 880,
-  margin: '0 auto',
+  margin: `0 auto`,
 });
 
 export const h1 = style({
   color: vars.color.textStrong,
-  fontSize: 26,
-  margin: '0 0 4px',
+  fontSize: vars.text['2xl'],
+  margin: `0 0 ${vars.space['2xs']}`,
 });
 
 export const lead = style({
   color: vars.color.textMuted,
-  fontSize: 13,
-  margin: '0 0 28px',
+  fontSize: vars.text.sm,
+  margin: `0 0 ${vars.space.xl}`,
 });
 
 export const h2 = style({
   color: vars.color.textStrong,
-  fontSize: 15,
-  margin: '32px 0 12px',
+  fontSize: vars.text.base,
+  margin: `${vars.space.xl} 0 ${vars.space.sm}`,
 });
 
 export const controls = style({
   background: vars.color.surface,
   border: `1px solid ${vars.color.border}`,
   borderRadius: 10,
-  padding: 16,
+  padding: vars.space.md,
   display: 'flex',
-  gap: 20,
+  gap: vars.space.lg,
   alignItems: 'center',
   flexWrap: 'wrap',
 });
 
 export const controlLabel = style({
   color: vars.color.textMuted,
-  fontSize: 12,
+  fontSize: vars.text.xs,
   display: 'flex',
   alignItems: 'center',
-  gap: 8,
+  gap: vars.space.xs,
 });
 
 export const slider = style({
@@ -59,7 +59,7 @@ export const slider = style({
 export const swatchRow = style({
   display: 'grid',
   gridTemplateColumns: 'repeat(auto-fit, minmax(110px, 1fr))',
-  gap: 8,
+  gap: vars.space.xs,
 });
 
 export const swatch = style({
@@ -69,39 +69,39 @@ export const swatch = style({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'flex-end',
-  padding: 8,
-  fontSize: 10,
+  padding: vars.space.xs,
+  fontSize: vars.text.xs,
 });
 
 export const card = style({
   background: vars.color.surface,
   border: `1px solid ${vars.color.border}`,
   borderRadius: 10,
-  padding: 20,
-  marginBottom: 12,
+  padding: vars.space.lg,
+  marginBottom: vars.space.sm,
 });
 
 export const cardTitle = style({
   color: vars.color.textStrong,
-  fontSize: 17,
-  margin: '0 0 6px',
+  fontSize: vars.text.lg,
+  margin: `0 0 ${vars.space['2xs']}`,
 });
 
 export const cardBody = style({
-  fontSize: 13,
+  fontSize: vars.text.sm,
   lineHeight: 1.75,
-  margin: '0 0 10px',
+  margin: `0 0 ${vars.space.xs}`,
 });
 
 export const meta = style({
   color: vars.color.textMuted,
-  fontSize: 11,
+  fontSize: vars.text.xs,
   margin: 0,
 });
 
 export const row = style({
   display: 'flex',
-  gap: 8,
+  gap: vars.space.xs,
   alignItems: 'center',
   flexWrap: 'wrap',
 });
@@ -109,8 +109,8 @@ export const row = style({
 const buttonBase = style({
   border: '1px solid transparent',
   borderRadius: 7,
-  padding: '9px 16px',
-  fontSize: 13,
+  padding: `${vars.space.xs} ${vars.space.md}`,
+  fontSize: vars.text.sm,
   fontWeight: 600,
   fontFamily: 'inherit',
   cursor: 'pointer',
@@ -152,8 +152,8 @@ export const tag = style({
   background: vars.color.brandSubtle,
   color: vars.color.brand,
   borderRadius: 999,
-  padding: '4px 11px',
-  fontSize: 11,
+  padding: `${vars.space['2xs']} ${vars.space.sm}`,
+  fontSize: vars.text.xs,
   fontWeight: 600,
 });
 
@@ -170,8 +170,8 @@ export const segmented = style({
   background: vars.color.bg,
   border: `1px solid ${vars.color.border}`,
   borderRadius: 8,
-  padding: 2,
-  gap: 2,
+  padding: vars.space['3xs'],
+  gap: vars.space['3xs'],
 });
 
 export const srOnly = style({
@@ -188,8 +188,8 @@ export const srOnly = style({
 
 export const segment = style({
   borderRadius: 6,
-  padding: '6px 13px',
-  fontSize: 12,
+  padding: `${vars.space['2xs']} ${vars.space.sm}`,
+  fontSize: vars.text.xs,
   fontWeight: 600,
   color: vars.color.textMuted,
   cursor: 'pointer',
@@ -210,8 +210,8 @@ export const segment = style({
 
 export const systemHint = style({
   color: vars.color.textMuted,
-  fontSize: 11,
-  margin: '8px 0 0',
+  fontSize: vars.text.xs,
+  margin: `${vars.space.xs} 0 0`,
 });
 
 /* ---------------------------------------------------------------- */
@@ -220,7 +220,7 @@ export const systemHint = style({
 
 export const note = style({
   color: vars.color.textMuted,
-  fontSize: 12,
+  fontSize: vars.text.xs,
   lineHeight: 1.8,
   margin: '0 0 14px',
 });
@@ -229,17 +229,17 @@ export const strategyBox = style({
   background: vars.color.surface,
   border: `1px solid ${vars.color.border}`,
   borderRadius: 10,
-  padding: 16,
-  marginBottom: 14,
+  padding: vars.space.md,
+  marginBottom: vars.space.sm,
   display: 'flex',
   flexDirection: 'column',
-  gap: 12,
+  gap: vars.space.sm,
 });
 
 export const strategyOptions = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: 8,
+  gap: vars.space.xs,
 });
 
 export const strategyOption = style({
@@ -247,7 +247,7 @@ export const strategyOption = style({
   gridTemplateColumns: 'auto 1fr',
   gap: '2px 10px',
   alignItems: 'start',
-  padding: '8px 10px',
+  padding: `${vars.space.xs} ${vars.space.xs}`,
   borderRadius: 8,
   border: `1px solid ${vars.color.border}`,
   cursor: 'pointer',
@@ -265,14 +265,14 @@ export const strategyOption = style({
 
 export const strategyName = style({
   color: vars.color.textStrong,
-  fontSize: 13,
+  fontSize: vars.text.sm,
   fontWeight: 600,
 });
 
 export const strategyDesc = style({
   gridColumn: 2,
   color: vars.color.textMuted,
-  fontSize: 11,
+  fontSize: vars.text.xs,
   lineHeight: 1.7,
   margin: 0,
 });
@@ -280,18 +280,18 @@ export const strategyDesc = style({
 export const checkLine = style({
   display: 'flex',
   alignItems: 'center',
-  gap: 8,
-  fontSize: 12,
+  gap: vars.space.xs,
+  fontSize: vars.text.xs,
   color: vars.color.text,
   cursor: 'pointer',
   borderTop: `1px solid ${vars.color.border}`,
-  paddingTop: 12,
+  paddingTop: vars.space.sm,
 });
 
 export const hueTable = style({
   width: '100%',
   borderCollapse: 'collapse',
-  fontSize: 11,
+  fontSize: vars.text.xs,
   color: vars.color.text,
 });
 
@@ -322,36 +322,36 @@ export const chip = style({
   height: 14,
   borderRadius: 4,
   verticalAlign: '-2px',
-  marginRight: 6,
+  marginRight: vars.space['2xs'],
 });
 
 /** バナー・トースト。淡い面＋同色の枠線＋同色の文字 */
 export const banner = style({
   display: 'flex',
   alignItems: 'flex-start',
-  gap: 10,
+  gap: vars.space.xs,
   borderRadius: 9,
   border: '1px solid',
   padding: '11px 14px',
-  fontSize: 13,
+  fontSize: vars.text.sm,
   lineHeight: 1.6,
-  marginBottom: 8,
+  marginBottom: vars.space.xs,
 });
 
 export const bannerLabel = style({
   fontWeight: 700,
-  marginRight: 6,
+  marginRight: vars.space['2xs'],
 });
 
 export const field = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: 6,
+  gap: vars.space['2xs'],
   maxWidth: 380,
 });
 
 export const fieldLabel = style({
-  fontSize: 12,
+  fontSize: vars.text.xs,
   fontWeight: 600,
   color: vars.color.textStrong,
 });
@@ -361,8 +361,8 @@ const inputBase = style({
   border: `1px solid ${vars.color.border}`,
   background: vars.color.surface,
   color: vars.color.text,
-  padding: '9px 11px',
-  fontSize: 13,
+  padding: `${vars.space.xs} ${vars.space.sm}`,
+  fontSize: vars.text.sm,
   fontFamily: 'inherit',
   selectors: {
     '&:focus-visible': {
@@ -379,16 +379,16 @@ export const inputInvalid = style([
   {
     borderColor: vars.color.danger,
     borderWidth: 2,
-    padding: '8px 10px',
+    padding: `${vars.space.xs} ${vars.space.xs}`,
   },
 ]);
 
 export const fieldError = style({
   display: 'flex',
   alignItems: 'center',
-  gap: 6,
+  gap: vars.space['2xs'],
   color: vars.color.danger,
-  fontSize: 12,
+  fontSize: vars.text.xs,
   fontWeight: 600,
 });
 
@@ -399,7 +399,7 @@ export const buttonDanger = style([
     color: vars.color.onStatus,
     display: 'inline-flex',
     alignItems: 'center',
-    gap: 6,
+    gap: vars.space['2xs'],
   },
 ]);
 
@@ -407,7 +407,7 @@ export const statusSwatch = style([
   swatch,
   {
     justifyContent: 'space-between',
-    gap: 4,
+    gap: vars.space['2xs'],
   },
 ]);
 

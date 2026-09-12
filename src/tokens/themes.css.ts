@@ -53,7 +53,49 @@ const statusTokens = (lightness: string, chroma: string, subtleL: string, subtle
   infoSubtle: statusColor('info', subtleL, subtleC),
 });
 
+/**
+ * 320px〜1440px の間を線形に補間する clamp を作る。
+ *
+ * 中間項を `rem + vw` にしてあるのが肝。`vw` だけだと、ブラウザの文字サイズ設定を
+ * 上げても文字が大きくならない画面ができる（ズームには効くが設定には効かない）。
+ * rem の項を混ぜることで、どちらにも追従する。
+ */
+const MIN_VW = 320;
+const MAX_VW = 1440;
+const ROOT = 16;
+
+const fluid = (minPx: number, maxPx: number) => {
+  const slope = (maxPx - minPx) / (MAX_VW - MIN_VW);
+  const vw = +(slope * 100).toFixed(4);
+  const rem = +((minPx - slope * MIN_VW) / ROOT).toFixed(4);
+  return `clamp(${(minPx / ROOT).toFixed(4)}rem, ${rem}rem + ${vw}vw, ${(maxPx / ROOT).toFixed(4)}rem)`;
+};
+
+/** 型と余白は配色によって変わらないので、ライト・ダークで同じものを使う */
+const sizing = {
+  text: {
+    xs: fluid(12, 13),
+    sm: fluid(14, 15),
+    base: fluid(16, 17),
+    lg: fluid(18, 21),
+    xl: fluid(22, 27),
+    '2xl': fluid(27, 35),
+    '3xl': fluid(33, 45),
+  },
+  space: {
+    '3xs': '0.125rem',
+    '2xs': '0.25rem',
+    xs: '0.5rem',
+    sm: '0.75rem',
+    md: '1rem',
+    lg: '1.5rem',
+    xl: '2rem',
+    '2xl': '3rem',
+  },
+};
+
 export const lightTheme = createTheme(vars, {
+  ...sizing,
   color: {
     bg: neutral('97%'),
     surface: neutral('100%'),
@@ -73,6 +115,7 @@ export const lightTheme = createTheme(vars, {
 });
 
 export const darkTheme = createTheme(vars, {
+  ...sizing,
   color: {
     bg: neutral('15%'),
     surface: neutral('21%'),

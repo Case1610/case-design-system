@@ -1,4 +1,5 @@
 import { createThemeContract } from '@vanilla-extract/css';
+import spec from '../../public/tokens.json';
 
 /**
  * トークンの契約（型のみ。値は持たない）。
@@ -133,12 +134,7 @@ export type StatusName = (typeof STATUS_NAMES)[number];
  * 変数が分かれているからこそ、状態色をブランドに追従させるか・固定するか・
  * ぶつかったときだけずらすかを、後から切り替えられる。
  */
-export const STATUS_HUE_VARS: Record<StatusName, string> = {
-  danger: '--ds-hue-danger',
-  warning: '--ds-hue-warning',
-  success: '--ds-hue-success',
-  info: '--ds-hue-info',
-};
+export const STATUS_HUE_VARS: Record<StatusName, string> = spec.statusHueVar;
 
 /**
  * 状態色の既定の色相。変数が未設定ならこの値が使われる。
@@ -146,9 +142,4 @@ export const STATUS_HUE_VARS: Record<StatusName, string> = {
  * 「赤は危険」「緑は成功」は学習された慣習であって、計算で導ける値ではない。
  * だからここは根拠を数式ではなく慣習に置いている。
  */
-export const STATUS_BASE_HUE: Record<StatusName, number> = {
-  danger: 27,
-  warning: 70,
-  success: 150,
-  info: 245,
-};
+export const STATUS_BASE_HUE: Record<StatusName, number> = spec.statusHue;

@@ -6,12 +6,21 @@
 ## 階層
 
 ```
-生成規則        oklch() を組み立てる関数。src/tokens/themes.css.ts の中に閉じている
-   ↓            neutral(l) / brandColor(l, c) / statusColor(name, l, c)
+数値            public/tokens.json。**正本。**/tokens.json として配信されている
+   ↓            明度(l)・彩度(c)・色相スロット・型の2極・余白。式は持たない
+生成規則        oklch() / clamp() を組み立てる。src/tokens/themes.css.ts の中に閉じている
+   ↓            roleColor(role) / statusTokens(s) / fluid([min, max])
 契約            役割名だけを公開する。src/tokens/contract.css.ts
    ↓            createThemeContract。ここに無い値は参照できない
 コンポーネント   契約から組む。独自のトークンを持たない
 ```
+
+**数値と生成規則を分けてあるのは、外から読めるようにするため。**
+`themes.css.ts` は vanilla-extract に依存していて、外のスクリプトから読み込めない。
+トークンを写して使っている側（ポートフォリオサイト）が突き合わせられるよう、
+数値だけを素の JSON として出してある（2026-09-13、decisions.md）。
+
+値を足すときは `public/tokens.json` を直す。`themes.css.ts` に数値を書かない。
 
 教科書的な Primitive → Semantic → Component とは形が違う。理由は2つ。
 
